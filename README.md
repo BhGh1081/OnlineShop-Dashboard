@@ -1,5 +1,19 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/BhGh1081/OnlineShop-Dashboard.git
+cd dashboard
+pnpm install --frozen-lockfile
+
+## demo Account
+
+user name: emilys
+password: emilyspass
+
 ## Getting Started
 
 First, run the development server:
