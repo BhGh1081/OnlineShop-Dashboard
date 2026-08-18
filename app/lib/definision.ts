@@ -23,9 +23,29 @@ export type cartType = {
     totalQuantity: number
 }
 
-export type authType = {
-    error: {
-        email?: string[],
-        password?: string[]
-    }
+export type userType = {
+    id: number,
+    username: string,
+    email: string,
+    firstName: string,
+    lastName: string,
+    gender: string,
+    image: string,
+    accessToken: string,
+    refreshToken: string
 }
+
+export type errorType = {
+    userName?: string[],
+    password?: string[]
+}
+
+export type serverRes = {
+    message: string
+}
+
+/* export type authType =
+    {status:'idle'} |
+    {status: 'loading'} |
+    {status: 'error', erro: errorType} |
+    {status: 'success', data: userType} */

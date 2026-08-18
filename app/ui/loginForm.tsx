@@ -2,41 +2,80 @@
 
 import { useState } from "react";
 import Button from "./button";
-import { Authentication } from "../lib/data";
-import clsx from "clsx";
-import { authType } from "../lib/definision";
-
-
+import { errorType, userType } from "../lib/definision";
+import z from "zod";
+import { UseLogin } from "../hooks/useLogin";
 
 
 export default function LoginForm({ className }: { className?: string }) {
 
-    const [email, setEmail] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [authResult, setAuthResult] = useState<authType>()
+    const [zodError, setZodError] = useState<errorType>();
+    const {mutate, data, error, isPending} = UseLogin();
+    // const [user, setUser] = useState();
+    // const searchParam = useSearchParams();
+    // const router = useRouter();
 
-    const login = (e: React.FormEvent) => {
+
+    // const redirectTo = searchParam.get('redirect');
+
+    // const { mutate, data, isPending, error } = useMutation({
+
+    //     mutationFn: Authentication,
+
+    //     onSuccess: (data) => {
+    //         setUser(data);
+    //         router.replace(redirectTo || '/');
+    //         router.refresh();
+    //     },
+
+    //     onError: (error) => {
+    //         console.log('authError:', error)
+    //     },
+
+    //     onSettled: () => {
+    //         console.log('Finished')
+    //     }
+    // })
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const result = Authentication({ email, password });
-        setAuthResult(result)
-        console.log(result)
+        const parseCredential = z.object({
+            userName: z.string()
+                .min(3, { message: 'At least 3 characters' })
+                .regex(/^[a-zA-Z]+$/, { message: 'Only English letters' }),
+            password: z.string().min(3, 'should not be less than 3 characters')
+        }).safeParse({ userName: userName, password: password })
+
+        if (!parseCredential.success) {
+            setZodError(parseCredential.error.flatten().fieldErrors);
+            console.log('error:', zodError);
+            return
+        }
+
+        mutate({ userName, password })
+        console.log("data:", data)
+
     }
+
+
+
 
     return (
         <div className={className}>
-            <form onSubmit={(e) => login(e)} className="w-[80%] h-fit space-y-15 p-10 bg-background rounded-lg">
+            <form onSubmit={(e) => handleSubmit(e)} className="w-[80%] h-fit space-y-15 p-10 bg-background rounded-lg text-center">
                 <div className="space-y-5">
                     <section>
                         <input
-                            name="email"
-                            value={email}
-                            placeholder="Email"
-                            onChange={(e) => setEmail(e.target.value)}
+                            name="userName"
+                            value={userName}
+                            placeholder="User name"
+                            onChange={(e) => setUserName(e.target.value)}
                             className="w-full h-15 rounded-lg bg-secondry p-4"
                         />
-                        {authResult?.error.email &&
-                            <label className={clsx('text-red-400')}>{authResult.error.email}</label>}
+                        {zodError?.userName && <p className='text-red-400 w-full text-start'>{zodError.userName}</p>}
                     </section>
                     <section>
                         <input
@@ -47,12 +86,13 @@ export default function LoginForm({ className }: { className?: string }) {
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full h-15 rounded-lg bg-secondry p-4"
                         />
-                        {authResult?.error.password && <label className="text-red-400 text-lg">{authResult.error.password}</label>}
+                        {zodError?.password && <p className="text-red-400 w-full text-start">{zodError.password}</p>}
                     </section>
                 </div>
                 <div>
-                    <Button type="submit" caption="Login" className="w-full h-15" />
+                    <button disabled={isPending} type="submit" className="w-full h-15 bg-primary text-xl text-white rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">{isPending ? "Signing in..." : "Login"}</button>
                 </div>
+                { error && <p className="text-red-500">{error.message}</p> }
             </form>
         </div>
     )

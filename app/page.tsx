@@ -1,10 +1,9 @@
-
-import Image from "next/image";
 import TopBar from "./component/topBar";
-import Toggle from "./ui/toggle";
 import '@/public/dashboard_icon.svg'
 import Menu from "./ui/menu";
 import { MdDashboard } from "react-icons/md";
+
+
 
 export default function Home() {
 
@@ -13,6 +12,7 @@ export default function Home() {
     { title: 'Setting', href: '/setting' },
     { title: 'Login', href: '/login' }
   ]
+
 
 
   return (
