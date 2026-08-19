@@ -2,7 +2,7 @@ import { ArrowTrendingDownIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/
 import clsx from "clsx";
 import { ShoppingBagIcon, UsersIcon, CurrencyDollarIcon, UserIcon } from "@heroicons/react/16/solid";
 import { formatCurrency } from "../lib/formatted";
-import { fetchCartsData, fetchUsersData } from "../lib/data";
+import { fetchCartsData } from "../lib/data";
 
 
 export function Card({ title, total, value, prevValue, type }:

@@ -26,7 +26,7 @@ export default function Toggle({className} : {className?: string}) {
 
 
     return (
-        <div className="w-12 h-12 flex justify-center items-center border-solid border-1 border-gray-400 rounded-lg hover:bg-gray-400/20">
+        <div className="w-12 h-12 flex justify-center items-center border-solid border border-gray-400 rounded-lg hover:bg-gray-400/20">
             <MdDarkMode onClick={() => setDark(true)}
                 className={clsx("w-9 h-9 text-sky-700 active:scale-90 transition-transform duration-100", dark && 'hidden' )} />
             <MdLightMode onClick={() => setDark(false)}

@@ -48,7 +48,7 @@ export default function TopBar({ children }: { children?: React.ReactNode }) {
                     <div 
                         onMouseLeave={() => setProfile(false)}
                         className={clsx("bg-modal h-45 shadow-md w-50 absolute space-y-6 justify-start px-6 py-4 rounded-lg top-21 right-0 transition-all duration-400 ease-in-out", !profile ? 'translate-0 opacity-0' : '-translate-y-5 opacity-100')}>
-                        <div className="border-b-solid border-b-1 border-b-gray-300 py-4">
+                        <div className="border-b-solid border-b border-b-gray-300 py-4">
                             <p>Petter John</p>
                             <p className="text-[.8rem] text-gray-400">Admin</p>
                         </div>
