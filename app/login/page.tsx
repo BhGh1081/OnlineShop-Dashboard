@@ -1,4 +1,4 @@
-import LoginForm from "../ui/loginForm";
+import LoginForm from "../../ui/loginForm";
 import QueryProvider from "../providers/queryProvider"
 import Image from "next/image";
 

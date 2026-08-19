@@ -1,4 +1,4 @@
-import { CardWraper } from "../ui/card";
+import { CardWraper } from "../../ui/card";
 
 
 export default async function Dashboard() {

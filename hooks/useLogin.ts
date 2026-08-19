@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation } from "@tanstack/react-query";
-import { Authentication } from "../services/userApi";
+import { Authentication } from "@/services/userApi";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export function UseLogin() {

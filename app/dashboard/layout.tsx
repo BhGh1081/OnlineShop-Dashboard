@@ -1,8 +1,8 @@
 import React from "react";
-import TopBar from "../component/topBar";
-import Sidebar from "../component/sidebar";
-import NavBar from "../component/navBar";
-import Menu from "../ui/menu";
+import TopBar from "../../component/topBar";
+import Sidebar from "../../component/sidebar";
+import NavBar from "../../component/navBar";
+import Menu from "../../ui/menu";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
 

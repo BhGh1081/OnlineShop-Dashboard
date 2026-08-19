@@ -1,6 +1,6 @@
-import TopBar from "./component/topBar";
+import TopBar from "../component/topBar";
 import '@/public/dashboard_icon.svg'
-import Menu from "./ui/menu";
+import Menu from "../ui/menu";
 import { MdDashboard } from "react-icons/md";
 
 
