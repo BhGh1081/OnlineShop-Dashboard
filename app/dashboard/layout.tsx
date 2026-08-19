@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   ]
 
     return (
-        <div className="flex gap-2.5 h-screen overflow-hidden p-2 md:p-4">
+        <div className="flex gap-2.5 h-dvh overflow-hidden p-2 md:p-4">
             <Sidebar className="hidden md:flex" />
             <div className="flex gap-2.5 flex-col flex-1">
                 <TopBar />
