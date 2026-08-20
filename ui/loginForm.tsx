@@ -13,32 +13,9 @@ export default function LoginForm({ className }: { className?: string }) {
     const [password, setPassword] = useState('');
     const [zodError, setZodError] = useState<errorType>();
     const {mutate, data, error, isPending} = UseLogin();
-    // const [user, setUser] = useState();
-    // const searchParam = useSearchParams();
-    // const router = useRouter();
 
 
-    // const redirectTo = searchParam.get('redirect');
-
-    // const { mutate, data, isPending, error } = useMutation({
-
-    //     mutationFn: Authentication,
-
-    //     onSuccess: (data) => {
-    //         setUser(data);
-    //         router.replace(redirectTo || '/');
-    //         router.refresh();
-    //     },
-
-    //     onError: (error) => {
-    //         console.log('authError:', error)
-    //     },
-
-    //     onSettled: () => {
-    //         console.log('Finished')
-    //     }
-    // })
-
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 

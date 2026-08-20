@@ -44,8 +44,21 @@ export type serverRes = {
     message: string
 }
 
-/* export type authType =
-    {status:'idle'} |
-    {status: 'loading'} |
-    {status: 'error', erro: errorType} |
-    {status: 'success', data: userType} */
+export type UserType = {
+    id: number,
+    username: string,
+    email: string,
+    firstName: string,
+    lastName: string,
+    gender: string,
+    image: string
+    accessToken: string
+    refreshToken: string
+}
+
+
+export type InitialType = {
+    user: UserType | null,
+    accessToken: string | null,
+    isAuthenticate: boolean
+} 
