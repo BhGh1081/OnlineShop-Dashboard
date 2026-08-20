@@ -28,6 +28,19 @@ pnpm dev
 bun dev
 ```
 
+## Authentication
+
+Authentication is implemented using DummyJSON API.
+
+- Login is handled through the DummyJSON authentication API.
+- Authentication state is managed with Redux Toolkit.
+- User data and access token are stored in `localStorage` to keep the user logged in after page refresh.
+- Logout clears the authentication state and removes the stored data.
+
+> Note: `localStorage` is used for demonstration purposes. In a production application, authentication tokens should be stored using secure HttpOnly cookies.
+
+
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
