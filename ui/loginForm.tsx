@@ -33,7 +33,6 @@ export default function LoginForm({ className }: { className?: string }) {
         }
 
         mutate({ userName, password })
-        console.log("data:", data)
 
     }
 

@@ -53,7 +53,7 @@ export function Card({ title, total, value, prevValue, type }:
 export async function CardWraper() {
 
     const data = await fetchCartsData();
-    //const totalUsers = await fetchUsersData();
+    //const totalUsers = await fetchUsers();
 
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">

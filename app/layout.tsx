@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Providers from "./providers/providers";
-
-import '../globals.css'
+import '../globals.css';
+import UserProvider from "@/context/userContext";
+import { getUser } from "@/services/auth";
 
 
 export const metadata: Metadata = {
@@ -9,15 +10,18 @@ export const metadata: Metadata = {
   description: "Admin Dashboard",
 };
 
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
 
+  const currentUser = await getUser();
 
   return (
 
     <html lang="en">
       <body className={''}>
         <Providers>
-          {children}
+          <UserProvider initialUser={currentUser}>
+            {children}
+          </UserProvider>
         </Providers>
       </body>
     </html>

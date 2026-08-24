@@ -1,4 +1,4 @@
-import { cartType } from '@/app/lib/definision';
+import { cartType } from '@/lib/definision';
 
 
      
