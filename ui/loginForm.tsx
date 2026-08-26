@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from "react";
-import Button from "./button";
-import { errorType, userType } from "../lib/definision";
+import { errorType} from "../lib/definision";
 import z from "zod";
-import { UseLogin } from "../hooks/useLogin";
+import { useLogin } from "../hooks/useLogin";
 
 
 export default function LoginForm({ className }: { className?: string }) {
@@ -12,7 +11,7 @@ export default function LoginForm({ className }: { className?: string }) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [zodError, setZodError] = useState<errorType>();
-    const {mutate, data, error, isPending} = UseLogin();
+    const {mutate, data, error, isPending} = useLogin();
 
 
     

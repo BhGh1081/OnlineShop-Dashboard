@@ -7,10 +7,12 @@ import { HomeIcon, UserGroupIcon } from "@heroicons/react/24/solid";
 import { DocumentTextIcon, ClipboardDocumentListIcon, ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import { MdDashboard } from "react-icons/md";
 import { poppins } from "../ui/font";
+import useLogout from "@/hooks/useLogout";
 
 export default function Sidebar({ className }: { className?: string }) {
 
     const pathname = usePathname();
+    const {mutate, isPending} = useLogout();
 
     const items = [
         { name: 'Home', href: '/dashboard', icon: HomeIcon },
@@ -44,7 +46,7 @@ export default function Sidebar({ className }: { className?: string }) {
                 <h2 className="text-gray-400 text-[0.9rem] text-center lg:text-start px-2">General</h2>
                 <div className="flex gap-2 md:flex-col lg:flex-row md:items-center lg:items-start p-2 py-3 rounded-md md:hover:bg-secondry md:hover:text-primary">
                     <ArrowLeftStartOnRectangleIcon className="w-6 h-6" />
-                    <button className="">Logout</button>
+                    <button onClick={() => mutate()} disabled={isPending} className="">{isPending? 'Logging Out' : 'Logout'}</button>
                 </div>
             </section>
         </div >
