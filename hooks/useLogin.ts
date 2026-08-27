@@ -2,12 +2,15 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+
 
 export function useLogin() {
 
     const searchParam = useSearchParams();
     const router = useRouter();
     const redirectTo = searchParam.get('redirect');
+    const queryClient = useQueryClient();
 
     const mutationFN = async(credentials: {userName: string, password: string}) => {
 
@@ -27,7 +30,8 @@ export function useLogin() {
     return useMutation({
         mutationFn: mutationFN ,
 
-        onSuccess: () => {
+        onSuccess: (data) => {
+            queryClient.setQueryData(['currentUser'], data.user)
             router.replace(redirectTo || '/');
             router.refresh();
         },

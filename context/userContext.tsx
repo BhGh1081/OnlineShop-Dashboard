@@ -14,7 +14,7 @@ export default function UserProvider({ initialUser, children }: { initialUser: C
 
     const { data: user } = useQuery({
         queryKey: ['currentUser'],
-        queryFn: () => fetch('/api/me').then(res => res.json()),
+        queryFn: () => fetch('/api/me').then(res =>{if(!res.ok) return null; return res.json()}),
         initialData: initialUser,
     });
 
