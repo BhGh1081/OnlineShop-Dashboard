@@ -17,8 +17,8 @@ return useMutation({
     },
 
     onSuccess(){
-        // queryClient.clear();
-        queryClient.setQueryData(['currentUser'], null);
+        queryClient.clear();
+        // queryClient.setQueryData(['currentUser'], null);
         router.push('/');
         router.refresh();
         
