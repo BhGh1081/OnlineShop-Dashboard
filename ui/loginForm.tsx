@@ -8,8 +8,8 @@ import { useLogin } from "../hooks/useLogin";
 
 export default function LoginForm({ className }: { className?: string }) {
 
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    const [userName, setUserName] = useState('emilys');
+    const [password, setPassword] = useState('emilyspass');
     const [zodError, setZodError] = useState<errorType>();
     const {mutate, data, error, isPending} = useLogin();
 
