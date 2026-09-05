@@ -2,7 +2,8 @@ import { ArrowTrendingDownIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/
 import clsx from "clsx";
 import { ShoppingBagIcon, UsersIcon, CurrencyDollarIcon, UserIcon } from "@heroicons/react/16/solid";
 import { formatCurrency } from "../lib/formatted";
-import { fetchCartsData } from "../lib/data";
+import { fetchCartsData } from "../services/carts";
+import { fetchUsers } from "@/services/users";
 
 
 export function Card({ title, total, value, prevValue, type }:
@@ -53,12 +54,12 @@ export function Card({ title, total, value, prevValue, type }:
 export async function CardWraper() {
 
     const data = await fetchCartsData();
-    //const totalUsers = await fetchUsers();
+    const {totalUsers} = await fetchUsers();
 
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
             <Card title="Orders" total={data!.totalOrders} value={15} prevValue={9} type="order" />
-            <Card title="User" total={35} value={3670} prevValue={2890} type="user" />
+            <Card title="User" total={totalUsers} value={3670} prevValue={2890} type="user" />
             <Card title="Custommer" total={data!.totalCustomers} value={2334345} prevValue={2334785} type="customer" />
             <Card title="Revenue" total={data!.totalRevenue} value={23423} prevValue={21453} type="revenue" />
         </div>

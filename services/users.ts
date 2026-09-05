@@ -1,17 +1,17 @@
 export async function fetchUsers() {
 
     try {
-        const res = await fetch('https://dummyjson.com/users', {
+        const res = await fetch('https://dummyjson.com/users?limit=0', {
             next: { revalidate: 60 }
         })
         if (!res.ok) {
             throw new Error('Database error')
         }
-        const users = await res.json();
-        const totalUsers = users.length
+        const totalUsers = await res.json();
 
         return totalUsers;
-    } catch {
-        console.log('Someting went wrong');
+    } catch(err) {
+        // throw new Error('Server Error', err);
+        console.log('zerrrrrrrrrrrrrrrrt')
     }
 }
