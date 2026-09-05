@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
         return response;
     } catch (error) {
-        return NextResponse.json({ error: "Invalid Credential" }, { status: 401 })
+        return NextResponse.json({ error: "Invalid UserName or Password" }, { status: 401 })
     }
 
 }

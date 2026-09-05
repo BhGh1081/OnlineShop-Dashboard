@@ -20,11 +20,13 @@ export function useLogin() {
             body: JSON.stringify(credentials)
         });
 
+        const result = await res.json();
+
         if(!res.ok){
-            throw new Error("Unsuccess Login, Try Again");
+            throw new Error(result.error);
         }
         
-        return res.json();
+        return result;
     }
 
     return useMutation({

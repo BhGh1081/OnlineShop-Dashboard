@@ -9,7 +9,7 @@ export default function Login() {
         // <Providers>
             <div className="flex flex-col-reverse md:flex-row h-screen py-5">
                 <div className="flex-2 flex justify-center items-center">
-                    <Image src={'/auth.png'} alt="authentication" width={500} height={400}  />
+                    <Image src={'/auth.png'} alt="authentication" width={500} height={400} priority className="w-auto h-auto" />
                 </div>
                 <LoginForm className="md:flex-3 flex md:items-center justify-center" />
             </div>
