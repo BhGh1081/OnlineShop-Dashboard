@@ -6,6 +6,7 @@ export async function POST(request: Request) {
 
     const { userName, password } = await request.json();
 
+
     try {
 
         const data = await Authentication({ userName, password });
@@ -31,8 +32,9 @@ export async function POST(request: Request) {
         });
 
         return response;
-    } catch (error) {
-        return NextResponse.json({ error: "Invalid UserName or Password" }, { status: 401 })
+    } catch (err) {
+        if (err instanceof Error) return NextResponse.json({ error: err.message }, { status: 400 })
+        return NextResponse.json({error: 'Something went wrong'}, {status:500})
     }
 
 }
