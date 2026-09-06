@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 
-export function middleware(request: NextRequest){
+export function proxy(request: NextRequest){
 
     const accessToken =  request.cookies.get('accessToken')?.value;
     const {pathname} = request.nextUrl;
@@ -17,5 +17,5 @@ export function middleware(request: NextRequest){
 }
 
 export const config = {
-    mstcher: ['/' +  '/dashboard/:path*']
+    matcher: ['/' ,  '/dashboard/:path*']
 }
