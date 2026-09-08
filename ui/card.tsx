@@ -2,17 +2,16 @@ import { ArrowTrendingDownIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/
 import clsx from "clsx";
 import { ShoppingBagIcon, UsersIcon, CurrencyDollarIcon, UserIcon } from "@heroicons/react/16/solid";
 import { formatCurrency } from "../lib/formatted";
-import { fetchCartsData } from "../services/carts";
-import { fetchUsers } from "@/services/users";
+import { getAllCarts } from "../services/carts";
+import { getAllUsers } from "@/services/users";
+
 
 
 export function Card({ title, total, value, prevValue, type }:
-    { title: string, total: number, value: number, prevValue: number, type: 'order' | 'customer' | 'revenue' | 'user' }) {
+    { title: string, total: number | null, value: number, prevValue: number, type: 'order' | 'customer' | 'revenue' | 'user' }) {
 
     const trend = value > prevValue;
     const present = (((value - prevValue) * 100) / prevValue).toFixed(2);
-
-    const num = formatCurrency(total);
 
     const iconMap = {
         order: ShoppingBagIcon,
@@ -32,10 +31,10 @@ export function Card({ title, total, value, prevValue, type }:
 
 
             <div className="flex h-full items-center justify-between">
-                {!total ?
+                {total === null ?
                     <p className="text-[.9rem] text-pink-400 leading-none">Data unavalible</p> :
                     <>
-                        <p className="font-bold text-[1.5rem]">{type === 'revenue' ? '$' + num : num}</p>
+                        <p className="font-bold text-[1.5rem]">{type === 'revenue' ? '$' + formatCurrency(total) : total}</p>
 
                         <div className="flex flex-col md:flex-row items-center ">
                             <ArrowTrendingDownIcon className={clsx('w-7 h-7 text-red-500', trend ? 'hidden' : 'block')} />
@@ -53,15 +52,18 @@ export function Card({ title, total, value, prevValue, type }:
 
 export async function CardWraper() {
 
-    const data = await fetchCartsData();
-    const {totalUsers} = await fetchUsers();
+    const [data, totalUsers] = await Promise.all([
+        getAllCarts(),
+        getAllUsers()
+    ]) 
+
 
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-            <Card title="Orders" total={data!.totalOrders} value={15} prevValue={9} type="order" />
+            <Card title="Orders" total={data? data.totalOrders : null} value={15} prevValue={9} type="order" />
             <Card title="User" total={totalUsers} value={3670} prevValue={2890} type="user" />
-            <Card title="Custommer" total={data!.totalCustomers} value={2334345} prevValue={2334785} type="customer" />
-            <Card title="Revenue" total={data!.totalRevenue} value={23423} prevValue={21453} type="revenue" />
+            <Card title="Custommer" total={data? data.totalCustomers : null} value={2334345} prevValue={2334785} type="customer" />
+            <Card title="Revenue" total={data? data.totalRevenue :null} value={23423} prevValue={21453} type="revenue" />
         </div>
     )
 }
