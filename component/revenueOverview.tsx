@@ -1,0 +1,25 @@
+'use client';
+
+import { ChartDataPoint } from "@/lib/definision";
+import { formatCurrency } from "@/lib/formatted";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+
+export default function RevenueOverview({ chartData }: { chartData: ChartDataPoint[] }) {
+
+
+
+    return (
+        <div className="w-full h-[40%] space-y-8 border-solid border-2 border-primary/30 rounded-lg text-center shadow-xl shadow-primary/10 py-4 pr-4">
+            <p className="text-gray-400">Revenue Overview</p>
+            <ResponsiveContainer width='100%' height='80%'>
+                <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray='3 3' stroke="white" opacity='70%' />
+                    <XAxis dataKey='date' tick={{fontSize: 12}} strokeWidth='3' />
+                    <YAxis dataKey='revenue' tick={{fontSize:12}} strokeWidth='3'/>
+                    <Tooltip contentStyle={{borderRadius: 5, opacity:'70%'}} formatter={(value) => formatCurrency(Number(value))} />
+                    <Line type='monotone' dataKey='revenue' stroke="#8b5cf6" strokeWidth='3' dot={false} />
+                </LineChart>
+            </ResponsiveContainer>
+        </div>
+    )
+}
