@@ -1,6 +1,6 @@
 import { UserResponse } from "@/lib/definision";
 
-export async function getAllUsers():Promise<number | null> {
+export async function getUsers():Promise<number | null> {
 
     try {
         const res = await fetch('https://dummyjson.com/users?limit=0', {
