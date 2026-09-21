@@ -1,11 +1,11 @@
 'use client';
 
 import { createContext, useContext } from "react";
-import { UserType } from "@/lib/definision";
+import { AuthType } from "@/lib/definision";
 import { useQuery } from "@tanstack/react-query";
 
 
-type CurrentUser = Omit<UserType, "accessToken" | "refreshToken">
+type CurrentUser = Omit<AuthType, "accessToken" | "refreshToken">
 
 const UserContext = createContext<CurrentUser | null>(null);
 

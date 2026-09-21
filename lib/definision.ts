@@ -1,3 +1,6 @@
+import Orders from "@/app/dashboard/orders/page"
+import { number } from "zod"
+
 export interface menuItem {
     title: string,
     href: string
@@ -13,7 +16,7 @@ export type productType = {
     discountedTotal: number,
     thumbnail: string
 }
-export type cartType = {
+export type CartType = {
     id: number
     products: productType[];
     total: number,
@@ -144,4 +147,17 @@ export type UserResponse = {
     total: number,
     skip: number,
     limit: number
-} 
+}
+
+export type ChartDataPoint = {
+    date: string
+    orders: number,
+    revenue: number
+}
+
+
+export type CartSummery = {
+    totalOrders: number,
+    totalCustomers: number,
+    totalRevenue: number
+}
