@@ -1,18 +1,16 @@
 import { ArrowTrendingDownIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { ShoppingBagIcon, UsersIcon, CurrencyDollarIcon, UserIcon } from "@heroicons/react/16/solid";
-import { formatCurrency } from "../lib/formatted";
-import { fetchCartsData } from "../services/carts";
-import { fetchUsers } from "@/services/users";
+import { roundNumber } from "../lib/formatted";
+import { CartSummery } from "@/lib/definision";
+
 
 
 export function Card({ title, total, value, prevValue, type }:
-    { title: string, total: number, value: number, prevValue: number, type: 'order' | 'customer' | 'revenue' | 'user' }) {
+    { title: string, total: number | null, value: number, prevValue: number, type: 'order' | 'customer' | 'revenue' | 'user' }) {
 
     const trend = value > prevValue;
     const present = (((value - prevValue) * 100) / prevValue).toFixed(2);
-
-    const num = formatCurrency(total);
 
     const iconMap = {
         order: ShoppingBagIcon,
@@ -24,7 +22,7 @@ export function Card({ title, total, value, prevValue, type }:
     const Icon = iconMap[type]
 
     return (
-        <div className="w-full flex flex-col gap-2 border-solid border-2 border-black/20 rounded-lg p-2 md:p-3">
+        <div className="w-full flex flex-col gap-2 border-solid border-2 border-primary/30 rounded-lg shadow-lg shadow-primary/10 p-2 md:p-3">
             <div className="flex gap-2 whitespace-nowrap">
                 <Icon className="w-5 h-5 text-gray-400" />
                 <p className="text-gray-400">Total {title}</p>
@@ -32,10 +30,10 @@ export function Card({ title, total, value, prevValue, type }:
 
 
             <div className="flex h-full items-center justify-between">
-                {!total ?
+                {total === null ?
                     <p className="text-[.9rem] text-pink-400 leading-none">Data unavalible</p> :
                     <>
-                        <p className="font-bold text-[1.5rem]">{type === 'revenue' ? '$' + num : num}</p>
+                        <p className="font-bold text-[1.5rem]">{type === 'revenue' ? '$' + roundNumber(total) : total}</p>
 
                         <div className="flex flex-col md:flex-row items-center ">
                             <ArrowTrendingDownIcon className={clsx('w-7 h-7 text-red-500', trend ? 'hidden' : 'block')} />
@@ -51,17 +49,15 @@ export function Card({ title, total, value, prevValue, type }:
 }
 
 
-export async function CardWraper() {
+export async function CardWraper({cartsData, totalUsers} : {cartsData: CartSummery | null, totalUsers: number | null}) {
 
-    const data = await fetchCartsData();
-    const {totalUsers} = await fetchUsers();
 
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-            <Card title="Orders" total={data!.totalOrders} value={15} prevValue={9} type="order" />
+            <Card title="Orders" total={cartsData? cartsData.totalOrders : null} value={15} prevValue={9} type="order" />
             <Card title="User" total={totalUsers} value={3670} prevValue={2890} type="user" />
-            <Card title="Custommer" total={data!.totalCustomers} value={2334345} prevValue={2334785} type="customer" />
-            <Card title="Revenue" total={data!.totalRevenue} value={23423} prevValue={21453} type="revenue" />
+            <Card title="Custommer" total={cartsData? cartsData.totalCustomers : null} value={2334345} prevValue={2334785} type="customer" />
+            <Card title="Revenue" total={cartsData? cartsData.totalRevenue :null} value={23423} prevValue={21453} type="revenue" />
         </div>
     )
 }

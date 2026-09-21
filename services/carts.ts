@@ -1,43 +1,41 @@
-import { cartType } from '@/lib/definision';
+import { CartsResponse, CartSummery, CartType } from '@/lib/definision';
 
 
-     
-
-export async function fetchCartsData() {
+export async function getRawCarts(): Promise<CartsResponse | null> {
 
     try {
         const res = await fetch('https://dummyjson.com/carts?limit=0', {
             next: { revalidate: 60 }
-        });
+        })
+        if(!res.ok) return null
 
-        if (!res.ok) {
-            throw new Error('Faild to fetch carts')
-        }
+        const carts = await res.json() as CartsResponse;
 
-        const {carts, total}  = await res.json();
+        return carts;
 
-        const totalOrders = total;
-
-        let totalRevenue = 0;
-
-        let uniqUserId = new Set()
-
-        for (const cart of carts as cartType[]) {
-            totalRevenue += cart.total;
-            uniqUserId.add(cart.userId);
-        }
-
-        const totalCustomers = uniqUserId.size;
+    }catch(error){
+        return null
+    }
+}
 
 
-        return {
-            totalOrders,
-            totalCustomers,
-            totalRevenue
-        }
+export function getCartsSummery(carts: CartType[]): CartSummery {
 
-    } catch(err) {
-        console.log('Database error',err)
+    let totalRevenue = 0;
+
+    let uniqUserId = new Set<number>()
+
+    for (const cart of carts) {
+        totalRevenue += cart.total;
+        uniqUserId.add(cart.userId);
     }
 
+    const totalCustomers = uniqUserId.size;
+
+
+    return {
+        totalOrders : carts.length,
+        totalCustomers,
+        totalRevenue
+    }
 }

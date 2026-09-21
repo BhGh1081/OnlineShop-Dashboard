@@ -1,17 +1,19 @@
-export async function fetchUsers() {
+import { UserResponse } from "@/lib/definision";
+
+export async function getUsers():Promise<number | null> {
 
     try {
         const res = await fetch('https://dummyjson.com/users?limit=0', {
             next: { revalidate: 60 }
         })
         if (!res.ok) {
-            throw new Error('Database error')
+            return null;
         }
-        const totalUsers = await res.json();
+        const {total} = await res.json() as UserResponse;
 
-        return totalUsers;
+        return total;
+
     } catch(err) {
-        // throw new Error('Server Error', err);
-        console.log('zerrrrrrrrrrrrrrrrt')
+        return null
     }
 }
