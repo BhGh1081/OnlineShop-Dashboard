@@ -13,8 +13,8 @@ export default function RevenueOverview({ chartData }: { chartData: ChartDataPoi
             <p className="text-gray-400">Revenue Overview</p>
             <ResponsiveContainer width='100%' height='80%'>
                 <LineChart data={chartData}>
-                    <CartesianGrid strokeDasharray='3 3' stroke="white" opacity='70%' />
-                    <XAxis dataKey='date' tick={{fontSize: 12}} strokeWidth='3' />
+                    <CartesianGrid strokeDasharray='3 3' stroke="gray" opacity='50%' />
+                    <XAxis dataKey='date' tick={{fontSize: 12}} strokeWidth='3' tickFormatter={(value) => value.toISOString().split('T')[0]} />
                     <YAxis dataKey='revenue' tick={{fontSize:12}} strokeWidth='3'/>
                     <Tooltip contentStyle={{borderRadius: 5, opacity:'70%'}} formatter={(value) => formatCurrency(Number(value))} />
                     <Line type='monotone' dataKey='revenue' stroke="#8b5cf6" strokeWidth='3' dot={false} />

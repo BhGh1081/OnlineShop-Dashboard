@@ -1,4 +1,4 @@
-export function getSimulatedDate(id:number, maxDaysBack: number = 30): string {
+export function getSimulatedDate(id:number, maxDaysBack: number = 30): Date {
 
     const daysAgo = id % maxDaysBack;
 
@@ -6,5 +6,5 @@ export function getSimulatedDate(id:number, maxDaysBack: number = 30): string {
 
     date.setDate(date.getDate() - daysAgo);
 
-    return date.toISOString().split('T')[0];
+    return date;
 }

@@ -150,7 +150,7 @@ export type UserResponse = {
 }
 
 export type ChartDataPoint = {
-    date: string
+    date: Date,
     orders: number,
     revenue: number
 }
