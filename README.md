@@ -8,8 +8,8 @@ It uses the dummyJSON API as a mock backend.
 
 ## Pasta dashboard home page
 
-![Light mode](./public/dashboard/desktop-light.jpg)
-![Dark mode](./public/dashboard/desktop-dark.jpg)
+![Light mode](./public/screenshot/light.png)
+![Dark mode](./public/screenshot/dark.png)
 
 
 
