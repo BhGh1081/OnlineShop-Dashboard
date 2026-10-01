@@ -16,15 +16,6 @@ export type productType = {
     discountedTotal: number,
     thumbnail: string
 }
-export type CartType = {
-    id: number
-    products: productType[];
-    total: number,
-    discountedTotal: number,
-    userId: number,
-    totalProducts: number,
-    totalQuantity: number
-}
 
 export type UserType = {
     id: number,
@@ -125,18 +116,20 @@ export type InitialType = {
     isAuthenticate: boolean
 }
 
+export type CartType = {
+    id: number
+    products: productType[];
+    total: number,
+    discountedTotal: number,
+    userId: number,
+    totalProducts: number,
+    totalQuantity: number,
+    date: Date,
+}
+
 
 export type CartsResponse = {
-    carts:
-    {
-        id: number,
-        products: productType[],
-        total: number,
-        discountedTotal: number,
-        userId: number,
-        totalProducts: number,
-        totalQuantity: number
-    }[],
+    carts: Omit<CartType, 'date'>[],
     total: number,
     skip: number,
     limit: number
@@ -149,7 +142,7 @@ export type UserResponse = {
     limit: number
 }
 
-export type ChartDataPoint = {
+export type PeriodSummery = {
     date: Date,
     orders: number,
     revenue: number

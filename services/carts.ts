@@ -1,4 +1,5 @@
 import { CartsResponse, CartSummery, CartType } from '@/lib/definision';
+import { getSimulatedDate } from '@/lib/simulated-date';
 
 
 export async function getRawCarts(): Promise<CartsResponse | null> {
@@ -9,9 +10,11 @@ export async function getRawCarts(): Promise<CartsResponse | null> {
         })
         if(!res.ok) return null
 
-        const carts = await res.json() as CartsResponse;
+        const result = await res.json() as CartsResponse;
 
-        return carts;
+        result.carts.forEach((cart) => {(cart as CartType).date =  getSimulatedDate(cart.id)})
+
+        return result;
 
     }catch(error){
         return null

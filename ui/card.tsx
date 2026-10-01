@@ -2,15 +2,23 @@ import { ArrowTrendingDownIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/
 import clsx from "clsx";
 import { ShoppingBagIcon, UsersIcon, CurrencyDollarIcon, UserIcon } from "@heroicons/react/16/solid";
 import { roundNumber } from "../lib/formatted";
-import { CartSummery } from "@/lib/definision";
+import { CartSummery, PeriodSummery } from "@/lib/definision";
+import { subDays } from 'date-fns';
+import { getValueInRange } from "@/services/orders-trend";
 
 
 
-export function Card({ title, total, value, prevValue, type }:
-    { title: string, total: number | null, value: number, prevValue: number, type: 'order' | 'customer' | 'revenue' | 'user' }) {
 
-    const trend = value > prevValue;
-    const present = (((value - prevValue) * 100) / prevValue).toFixed(2);
+export function Card({ title, total, prevValue, type }:
+    { title: string, total: number | null, prevValue: number | null, type: 'order' | 'customer' | 'revenue' | 'user' }) {
+
+    let trend, present;
+
+    if (total && prevValue) {
+        trend = total > prevValue;
+        present = (((total - prevValue) * 100) / prevValue).toFixed(2);
+    }
+
 
     const iconMap = {
         order: ShoppingBagIcon,
@@ -33,12 +41,16 @@ export function Card({ title, total, value, prevValue, type }:
                 {total === null ?
                     <p className="text-[.9rem] text-pink-400 leading-none">Data unavalible</p> :
                     <>
-                        <p className="font-bold text-[1.5rem]">{type === 'revenue' ? '$' + roundNumber(total) : total}</p>
-
-                        <div className="flex flex-col md:flex-row items-center ">
-                            <ArrowTrendingDownIcon className={clsx('w-7 h-7 text-red-500', trend ? 'hidden' : 'block')} />
-                            <ArrowTrendingUpIcon className={clsx('w-7 h-7 text-green-500', trend ? 'block' : 'hidden')} />
-                            <p className={clsx('text-[.8rem]', trend ? 'text-green-500' : 'text-red-500')}>{present}%</p>
+                        <div className="flex items-center gap-2">
+                            <p className="font-bold text-[1.5rem]">{type === 'revenue' ? '$' + roundNumber(total) : total}</p>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <div className="flex  items-center">
+                                <ArrowTrendingDownIcon className={clsx('w-7 h-7 text-red-400', trend ? 'hidden' : 'block')} />
+                                <ArrowTrendingUpIcon className={clsx('w-7 h-7 text-green-400', trend ? 'block' : 'hidden')} />
+                                <p className={clsx('text-[.8rem]', trend ? 'text-green-400' : 'text-red-400')}>{present}%</p>
+                            </div>
+                            <p className={clsx('text-[.8rem]', trend ? 'text-green-500' : 'text-red-400 ml-4')}>(vs last mounth)</p>
                         </div>
                     </>
                 }
@@ -49,15 +61,26 @@ export function Card({ title, total, value, prevValue, type }:
 }
 
 
-export async function CardWraper({cartsData, totalUsers} : {cartsData: CartSummery | null, totalUsers: number | null}) {
+export async function CardWraper({ cartsData, totalUsers, periodSummery }: { cartsData: CartSummery | null, totalUsers: number | null, periodSummery: PeriodSummery[] | undefined }) {
 
+    let currentValue, previouseValue = null;
+
+    const today = new Date();
+
+    const twoWeeksAgo = subDays(today, 30);
+    const aMounthAgo = subDays(today, 60);
+
+    if (periodSummery) {
+        currentValue = getValueInRange(periodSummery, twoWeeksAgo, today);
+        previouseValue = getValueInRange(periodSummery, aMounthAgo, twoWeeksAgo);
+    }
 
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-            <Card title="Orders" total={cartsData? cartsData.totalOrders : null} value={15} prevValue={9} type="order" />
-            <Card title="User" total={totalUsers} value={3670} prevValue={2890} type="user" />
-            <Card title="Custommer" total={cartsData? cartsData.totalCustomers : null} value={2334345} prevValue={2334785} type="customer" />
-            <Card title="Revenue" total={cartsData? cartsData.totalRevenue :null} value={23423} prevValue={21453} type="revenue" />
+            <Card title="Orders" total={currentValue?.orders ?? null} prevValue={previouseValue?.orders ?? null} type="order" />
+            <Card title="User" total={totalUsers}  prevValue={2890} type="user" />
+            <Card title="Custommer" total={cartsData ? cartsData.totalCustomers : null} prevValue={2334785} type="customer" />
+            <Card title="Revenue" total={currentValue?.revenue ?? null}  prevValue={previouseValue?.revenue ?? null} type="revenue" />
         </div>
     )
 }
