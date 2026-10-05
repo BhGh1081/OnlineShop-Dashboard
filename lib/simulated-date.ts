@@ -1,10 +1,9 @@
-export function getSimulatedDate(id:number, maxDaysBack: number = 30): Date {
+export function getSimulatedDate(id: number, maxDaysBack: number = 60): Date {
 
-    const daysAgo = id % maxDaysBack;
+    const wave = Math.sin(id * 0.3) * 10;
+    const daysBack = Math.abs(Math.floor((id + wave) % maxDaysBack));
 
     const date = new Date();
-
-    date.setDate(date.getDate() - daysAgo);
-
+    date.setDate(date.getDate() - daysBack);
     return date;
 }
