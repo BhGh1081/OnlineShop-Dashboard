@@ -129,7 +129,7 @@ export type CartType = {
 
 
 export type CartsResponse = {
-    carts: Omit<CartType, 'date'>[],
+    carts: CartType[]
     total: number,
     skip: number,
     limit: number
@@ -145,7 +145,9 @@ export type UserResponse = {
 export type PeriodSummery = {
     date: Date,
     orders: number,
-    revenue: number
+    revenue: number,
+    customers: number,
+    userIds: number[]
 }
 
 

@@ -67,19 +67,19 @@ export async function CardWraper({ cartsData, totalUsers, periodSummery }: { car
 
     const today = new Date();
 
-    const twoWeeksAgo = subDays(today, 30);
-    const aMounthAgo = subDays(today, 60);
+    const aMounthAgo = subDays(today, 30);
+    const twoMounthAgo = subDays(today, 60);
 
     if (periodSummery) {
-        currentValue = getValueInRange(periodSummery, twoWeeksAgo, today);
-        previouseValue = getValueInRange(periodSummery, aMounthAgo, twoWeeksAgo);
+        currentValue = getValueInRange(periodSummery, aMounthAgo, today);
+        previouseValue = getValueInRange(periodSummery, twoMounthAgo, aMounthAgo);
     }
 
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
             <Card title="Orders" total={currentValue?.orders ?? null} prevValue={previouseValue?.orders ?? null} type="order" />
-            <Card title="User" total={totalUsers}  prevValue={2890} type="user" />
-            <Card title="Custommer" total={cartsData ? cartsData.totalCustomers : null} prevValue={2334785} type="customer" />
+            <Card title="User" total={totalUsers}  prevValue={223} type="user" />
+            <Card title="Custommer" total={currentValue?.customers ?? null} prevValue={previouseValue?.customers ?? null} type="customer" />
             <Card title="Revenue" total={currentValue?.revenue ?? null}  prevValue={previouseValue?.revenue ?? null} type="revenue" />
         </div>
     )

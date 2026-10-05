@@ -16,7 +16,7 @@ export default function RevenueOverview({ periodSummery }: { periodSummery: Peri
                     <CartesianGrid strokeDasharray='3 3' stroke="gray" opacity='50%' />
                     <XAxis dataKey='date' tick={{fontSize: 12}} strokeWidth='3' tickFormatter={(value) => value.toISOString().split('T')[0]} />
                     <YAxis dataKey='revenue' tick={{fontSize:12}} strokeWidth='3'/>
-                    <Tooltip contentStyle={{borderRadius: 5, opacity:'70%'}} labelFormatter={(value) => (value).toISOString().split('T')[0]} formatter={(value) => formatCurrency(Number(value))}/>
+                    <Tooltip contentStyle={{borderRadius: 5, opacity:'70%'}} labelFormatter={(value) => (value as unknown as Date).toISOString().split('T')[0]} formatter={(value) => formatCurrency(Number(value))}/>
                     <Line type='monotone' dataKey='revenue' stroke="#8b5cf6" strokeWidth='3' dot={false} />
                 </LineChart>
             </ResponsiveContainer>
