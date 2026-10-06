@@ -1,5 +1,5 @@
 import { getRawCarts } from "@/services/carts";
-import { getUsers } from "@/services/users";
+import { getRawUsers } from "@/services/users";
 import { CardWraper } from "../../ui/card";
 import { getOrdersTrend } from "@/services/orders-trend";
 import { getCartsSummery } from "@/services/carts";
@@ -13,10 +13,16 @@ export default async function Dashboard() {
 
     let cartsData: CartSummery | null = null;
 
-    const [cartRes, totalUsers] = await Promise.all([
+    let totalUsers: number | null = null;
+
+    const [cartRes, users] = await Promise.all([
         getRawCarts(),
-        getUsers()
+        getRawUsers()
     ])
+
+    if(users) {
+        totalUsers = users.total;
+    }
 
     if (cartRes) {
         periodSummery = getOrdersTrend(cartRes.carts);

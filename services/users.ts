@@ -1,6 +1,6 @@
 import { UserResponse } from "@/lib/definision";
 
-export async function getUsers():Promise<number | null> {
+export async function getRawUsers():Promise<UserResponse | null> {
 
     try {
         const res = await fetch('https://dummyjson.com/users?limit=0', {
@@ -9,9 +9,9 @@ export async function getUsers():Promise<number | null> {
         if (!res.ok) {
             return null;
         }
-        const {total} = await res.json() as UserResponse;
+        const users = await res.json() as UserResponse;
 
-        return total;
+        return users;
 
     } catch(err) {
         return null
