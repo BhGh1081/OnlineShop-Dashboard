@@ -156,3 +156,12 @@ export type CartSummery = {
     totalCustomers: number,
     totalRevenue: number
 }
+
+export type TopCustomer = {
+    image: string,
+    userId: number,
+    firstName: string,
+    lastName: string,
+    order: number,
+    totalSpend: number
+}
