@@ -4,26 +4,25 @@ import { CardWraper } from "../../ui/card";
 import { getOrdersTrend } from "@/lib/orders-trend";
 import { getCartsSummery } from "@/services/carts";
 import RevenueOverview from "@/component/revenueOverview";
-import { CartSummery, PeriodSummery } from "@/lib/definision";
 import { getTopCustomer } from "@/services/getTopCustomer";
 import TopCustomerTable from "@/ui/topCustomerTable";
 
 
 export default async function Dashboard() {
 
-    const [cartRes, userRes] = await Promise.all([
+    const [cartRes, users] = await Promise.all([
         getRawCarts(),
         getRawUsers()
     ])
 
 
-    const totalUsers = userRes?.total ?? null;
+    const totalUsers = users?.total ?? null;
 
     const periodSummery = cartRes ? getOrdersTrend(cartRes.carts) : null;
 
     const cartsData = cartRes ? getCartsSummery(cartRes.carts) : null;
 
-    const topCustomer = cartRes && userRes ? getTopCustomer(cartRes.carts, userRes.users, 10) : null;
+    const topCustomer = cartRes && users ? getTopCustomer(cartRes.carts, users.users, 10) : null;
 
 
 
