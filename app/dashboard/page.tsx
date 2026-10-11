@@ -1,7 +1,7 @@
 import { getRawCarts } from "@/services/carts";
 import { getRawUsers } from "@/services/users";
 import { CardWraper } from "../../ui/card";
-import { getOrdersTrend } from "@/services/orders-trend";
+import { getOrdersTrend } from "@/lib/orders-trend";
 import { getCartsSummery } from "@/services/carts";
 import RevenueOverview from "@/component/revenueOverview";
 import { CartSummery, PeriodSummery } from "@/lib/definision";
@@ -9,7 +9,7 @@ import { CartSummery, PeriodSummery } from "@/lib/definision";
 
 export default async function Dashboard() {
 
-    let periodSummery: PeriodSummery[] | undefined;
+    let periodSummery: PeriodSummery[] | null = (null);
 
     let cartsData: CartSummery | null = null;
 
