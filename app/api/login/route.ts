@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Authentication } from "@/services/auth";
+import { cookiesOption, accessMaxAge, refreshMaxAge } from "@/lib/authCookies";
 
 
 export async function POST(request: Request) {
@@ -15,21 +16,9 @@ export async function POST(request: Request) {
 
         const response = NextResponse.json({ user });
 
-        response.cookies.set("accessToken", accessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            path: '/',
-            sameSite: 'lax',
-            maxAge: 60 * 60
-        });
+        response.cookies.set("accessToken", accessToken, {...cookiesOption, maxAge: accessMaxAge });
 
-        response.cookies.set("refreshToken", refreshToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            path: '/',
-            sameSite: 'lax',
-            maxAge: 60 * 60* 24
-        });
+        response.cookies.set("refreshToken", refreshToken, {...cookiesOption, maxAge: refreshMaxAge});
 
         return response;
     } catch (err) {

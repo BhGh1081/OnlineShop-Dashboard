@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
+import { deleteCookie } from "@/lib/authCookies";
 
 
 export function POST(){
 
     const response = NextResponse.json({success: true});
 
-    response.cookies.delete('accessToken');
-    response.cookies.delete('refreshToken');
-
-    return response
+    return deleteCookie(response);
     
 }
