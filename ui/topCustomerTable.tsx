@@ -12,7 +12,7 @@ export default function TopCustomerTable({ topCustomer, rowKey, className }: { t
             <p className="text-gray-400">Top 10 Customers</p>
             <div className="w-full max-h-50 overflow-auto scrollbar-thin">
                 <table className="w-full">
-                    <thead className="bg-primary/50 h-10 top-0 sticky">
+                    <thead className="bg-background bg-linear-to-r from-primary/50 to-primary/50 h-10 top-0 sticky z-10">
                         <tr>
                             {option.map((item, index) => <th key={index} className="text-start px-4">{item}</th>)}
                         </tr>
@@ -21,7 +21,7 @@ export default function TopCustomerTable({ topCustomer, rowKey, className }: { t
                         {topCustomer.map((customer, index) => {
                             const { image, ...rest } = customer;
                             return <tr key={String(customer[rowKey])} className="even:bg-primary/10 h-8">
-                                <td className="px-4"><Image src={image} alt={`${customer.firstName}${customer.lastName}`} width={30} height={30} /></td>
+                                <td className="px-3"><Image src={image} alt={`${customer.firstName}${customer.lastName}`} width={30} height={30} /></td>
                                 {Object.values(rest).map((item, index) =>
                                     <td key={index} className="text-start px-4">{item}</td>)}</tr>
                         })}
