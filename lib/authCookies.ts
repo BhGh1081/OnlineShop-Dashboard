@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 
 
 
-export const accessMaxAge = 60 * 1;
-export const refreshMaxAge = 60 * 3
+export const accessMaxAge = 60 * 60;
+export const refreshMaxAge = 60 * 60* 24
 
 
 export const cookiesOption = {
