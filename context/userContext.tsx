@@ -16,6 +16,7 @@ export default function UserProvider({ initialUser, children }: { initialUser: C
         queryKey: ['currentUser'],
         queryFn: () => fetch('/api/me').then(res =>{if(!res.ok) return null; return res.json()}),
         initialData: initialUser,
+        staleTime: 5 * 60 * 1000
     });
 
 
