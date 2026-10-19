@@ -24,7 +24,7 @@ export function deleteCookie(response: NextResponse) {
 
 
 
-export async function setNewToken(response: NextResponse, refreshToken: string, destination: URL) {
+export async function setNewToken(response: NextResponse, refreshToken: string) {
 
     try {
         const res = await fetch('https://dummyjson.com/auth/refresh', {

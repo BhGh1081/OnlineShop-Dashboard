@@ -33,8 +33,9 @@ export function useLogin() {
         mutationFn: mutationFN ,
 
         onSuccess: (data) => {
+            const safeRedirect = (redirectTo && redirectTo.startsWith('/') && !redirectTo.startsWith('//')) ? redirectTo : '/dashboard'
             queryClient.setQueryData(['currentUser'], data.user)
-            router.replace(redirectTo || '/');
+            router.replace(safeRedirect);
             router.refresh();
         },
 
