@@ -4,7 +4,7 @@ import { ShoppingBagIcon, UsersIcon, CurrencyDollarIcon, UserIcon } from "@heroi
 import { roundNumber } from "../lib/formatted";
 import { CartSummery, PeriodSummery } from "@/lib/definision";
 import { subDays } from 'date-fns';
-import { getValueInRange } from "@/services/orders-trend";
+import { getValueInRange } from "@/lib/orders-trend";
 
 
 
@@ -61,7 +61,7 @@ export function Card({ title, total, prevValue, type }:
 }
 
 
-export async function CardWraper({ cartsData, totalUsers, periodSummery }: { cartsData: CartSummery | null, totalUsers: number | null, periodSummery: PeriodSummery[] | undefined }) {
+export async function CardWraper({ cartsData, totalUsers, periodSummery }: { cartsData: CartSummery | null, totalUsers: number | null, periodSummery: PeriodSummery[] | null }) {
 
     let currentValue, previouseValue = null;
 

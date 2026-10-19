@@ -1,31 +1,35 @@
 import { getRawCarts } from "@/services/carts";
-import { getUsers } from "@/services/users";
+import { getRawUsers } from "@/services/users";
 import { CardWraper } from "../../ui/card";
-import { getOrdersTrend } from "@/services/orders-trend";
+import { getOrdersTrend } from "@/lib/orders-trend";
 import { getCartsSummery } from "@/services/carts";
 import RevenueOverview from "@/component/revenueOverview";
-import { CartSummery, PeriodSummery } from "@/lib/definision";
+import { getTopCustomer } from "@/services/getTopCustomer";
+import TopCustomerTable from "@/ui/topCustomerTable";
 
 
 export default async function Dashboard() {
 
-    let periodSummery: PeriodSummery[] | undefined;
-
-    let cartsData: CartSummery | null = null;
-
-    const [cartRes, totalUsers] = await Promise.all([
+    const [cartRes, users] = await Promise.all([
         getRawCarts(),
-        getUsers()
+        getRawUsers()
     ])
 
-    if (cartRes) {
-        periodSummery = getOrdersTrend(cartRes.carts);
-        cartsData = getCartsSummery(cartRes.carts);
-    }
+
+    const totalUsers = users?.total ?? null;
+
+    const periodSummery = cartRes ? getOrdersTrend(cartRes.carts) : null;
+
+    const cartsData = cartRes ? getCartsSummery(cartRes.carts) : null;
+
+    const topCustomer = cartRes && users ? getTopCustomer(cartRes.carts, users.users, 10) : null;
+
+
+
 
 
     return (
-        <div className="h-full space-y-10">
+        <div className="h-full space-y-20 overflow-auto scrollbar-none">
             <CardWraper cartsData={cartsData} totalUsers={totalUsers} periodSummery={periodSummery} />
             {periodSummery ?
                 <RevenueOverview periodSummery={periodSummery} /> :
@@ -33,6 +37,9 @@ export default async function Dashboard() {
                     <p className="text-gray-400">Revenue Overview</p>
                     <p className="text-xl">Data Unavailable</p>
                 </div>}
+            {topCustomer ?
+                <TopCustomerTable topCustomer={topCustomer} rowKey="userId" /> : <p>nodata</p>
+            }
         </div>
     )
 }
