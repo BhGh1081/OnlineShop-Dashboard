@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 
 
-export const accessMaxAge = 60 * 60;
+export const accessMaxAge = 60 * 55;
 export const refreshMaxAge = 60 * 60* 24
 
 

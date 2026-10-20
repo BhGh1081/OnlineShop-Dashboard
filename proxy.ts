@@ -14,10 +14,10 @@ export async function proxy(request: NextRequest) {
     if (pathname === '/') {
         if (accessToken) return NextResponse.redirect(new URL('/dashboard', request.url));
         if (refreshToken) {
-            const res = await setNewToken(NextResponse.redirect(destination),refreshToken);
+            const res = await setNewToken(NextResponse.redirect(new URL('/dashboard', request.url)),refreshToken);
             return res ?? deleteCookie(NextResponse.redirect(loginUrl));
         }
-        return NextResponse.redirect(new URL('/login', request.url))
+        return NextResponse.redirect(loginUrl)
     }
     if (pathname.startsWith('/dashboard')) {
         if (accessToken) return NextResponse.next();
