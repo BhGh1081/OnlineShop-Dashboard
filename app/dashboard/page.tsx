@@ -29,7 +29,7 @@ export default async function Dashboard() {
 
 
     return (
-        <div className="h-full space-y-20 overflow-auto scrollbar-none">
+        <div className="h-full w-full space-y-20 overflow-auto scrollbar-none">
             <CardWraper cartsData={cartsData} totalUsers={totalUsers} periodSummery={periodSummery} />
             {periodSummery ?
                 <RevenueOverview periodSummery={periodSummery} /> :
